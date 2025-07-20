@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vulnerable Test Page</title>
+</head>
+<body>
+  <h1>Welcome to Vulnerable Test Page</h1>
+
+  <!-- 1. Reflexive XSS -->
+  <form action="">
+    <label>Search:</label>
+    <input type="text" name="q">
+    <button type="submit">Search</button>
+  </form>
+  <div>
+    You searched for: <span id="result"></span>
+  </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    document.getElementById('result').textContent = params.get('q');
+  </script>
+
+  <!-- 2. Open Redirect -->
+  <a href="/redirect?url=https://attacker.com">Special Offer</a>
+
+  <!-- 3. Insecure login form -->
+  <form action="http://example.com/login" method="POST">
+    <label>Username:</label><input type="text" name="user"><br>
+    <label>Password:</label><input type="password" name="pass"><br>
+    <input type="submit" value="Login">
+  </form>
+
+  <!-- 4. Hidden admin panel -->
+  <a href="/admin-panel">Admin Panel</a>
+
+  <!-- 5. Sensitive comment -->
+  <!-- TODO: debug=true, remove before production -->
+</body>
+</html>
